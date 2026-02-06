@@ -82,7 +82,5 @@ Fun fact: **I enjoy food and love to try a multitude of different restuarants an
 ## Image
 Here’s a photo that represents me:
 
-![A photo of me](your-image-file.jpg)
-
-Replace `your-image-file.jpg` with the actual filename you upload into your `docs/` folder.
+![A photo of me](Solo_Shot.jpg)
 
