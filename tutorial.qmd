@@ -2,11 +2,13 @@
 title: Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python
 ---
 
-## Introdcution
-  Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, times series is essential to many different businesses and modeling techniques. Although the prominence, forecasting can be intimidating if you are new to modeling.
+## Introduction
+  Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, times series is essential to many different businesses and modeling techniques. Although the prominence, forecasting can be intimidating if you are new to modeling. 
+
   Prophet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, trends, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory. 
 
 In this tutorial, you’ll learn how to:
+
 - Prepare your data for Prophet
 - Fit your first forecasting model
 - Visualize predictions and components
@@ -26,8 +28,9 @@ from statsmodels.graphics.tsaplots import plot_acf
 import scipy.stats as stats
 ```
 Prophet expects a dataframe with two columns:
-ds <- dates
-y <-  numeric values to forecast
+
+- ds <- dates
+- y <-  numeric values to forecast
 
 ## Loading and Preparing The Data
 ```python
@@ -48,7 +51,7 @@ It must also be in the format YYYY-MM-DD or YYYY-MM-DD-HH-MM-SS
 The Prophet model is as follows:
 
 \[
-y(t) = g(t) + s(t) + h(t) + \varepsilon_t
+y(t) = g(t) + s(t) + h(t) + $\varepsilon$_t
 \]
 
 Where:
@@ -65,9 +68,11 @@ m.fit(df)
 ```
 
 Prophet automatically models:
+
 - nonlinear trend
 - weekly seasonality
 - yearly seasonality
+
 You can customize these later.
 
 ## Creating a Future Dataframe
@@ -75,6 +80,7 @@ You can customize these later.
 future = m.make_future_dataframe(periods=30)  # forecast 30 days ahead
 future.tail()
 ```
+
 This creates a dataframe with all historical dates plus 30 new ones.
 
 ## Generating Forecast
@@ -85,6 +91,7 @@ forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail()
 
 ### Prophet Output
 Table of expected output from the Prophet forecast model:
+
 | Column        | Meaning                                      |
 |---------------|----------------------------------------------|
 | `ds`          | Date of the forecast                         |
@@ -111,10 +118,17 @@ fig2 = m.plot_components(forecast)
 plt.show()
 ```
 This breaks the model into:
+
 - overall trend
 - weekly seasonality
 - yearly seasonality
+
 These components help you understand why the model predicts what it does.
+
+Here is an example of a forecast plot:
+
+![Forecast plot showing Prophet predictions](forecast_plot.png)
+
 
 ## Validity of Model
 As with every regression model, assumptions should still be evaluated and met using the **LINE** assumptions (Linear, Independent, Normal, Equal Variance)
@@ -142,11 +156,17 @@ These additions can help improve accuracy of model especially when there are kno
 
 ### Conclusion
   The Prophet package is a very versitile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accesbile. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process. 
+  
   To put this workflow into practice, try one of the following next steps:
+
 - Apply the Prophet workflow to your own time‑stamped dataset, even if it’s something simple like daily counts or personal tracking data.
 - Experiment with adding holidays or custom seasonalities to see how domain knowledge changes the shape and accuracy of your forecast.
 - Compare Prophet’s predictions to a simple baseline model, such as a moving average or naive “last value” forecast, to build intuition about when Prophet adds value.
 - Explore another forecasting library such as **statsmodels** or **scikit‑learn**, and compare its predictions to Prophet to build intuition about when each tool performs best.
 
+## Additional Resources
+
+You can learn more from the 
+[official Prophet documentation](https://facebook.github.io/prophet/).
 
 
