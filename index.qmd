@@ -1,0 +1,7 @@
+---
+title: "Welcome"
+---
+
+# Welcome to My Portfolio
+
+This site contains my About Me page, technical tutorials, and project work for Stat 386.
