@@ -21,7 +21,7 @@ My goal is to continue developing strong technical skills while contributing to 
 
 ## Blogs / Tutorials
 
-- [Tutorial](tutorial.md)
+- [Forecasting with Prophet Package](tutorial.md)
 
 
 ---
