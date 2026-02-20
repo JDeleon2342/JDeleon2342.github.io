@@ -127,7 +127,7 @@ These components help you understand why the model predicts what it does.
 
 Here is an example of a forecast plot:
 
-![Forecast plot showing Prophet predictions](forecast_plot.png)
+![Forecast plot showing Prophet predictions](prophet_forecast_python.png)
 
 
 ## Validity of Model
