@@ -1,5 +1,5 @@
 ---
-title: Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python
+title: "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python"
 ---
 
 ## Introduction
