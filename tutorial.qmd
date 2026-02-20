@@ -3,9 +3,9 @@ title: Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophe
 ---
 
 ## Introduction
-  Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, times series is essential to many different businesses and modeling techniques. Although the prominence, forecasting can be intimidating if you are new to modeling. 
+  Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, time series is essential to many different businesses and modeling techniques. Despite its prominence, forecasting can be intimidating if you are new to modeling. 
 
-  Prophet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, trends, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory. 
+  Prophet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory. 
 
 In this tutorial, you’ll learn how to:
 
@@ -20,6 +20,7 @@ In the command line:
 pip install prophet
 
 Load the packages needed:
+
 ```python
 from prophet import Prophet
 import pandas as pd
@@ -29,10 +30,11 @@ import scipy.stats as stats
 ```
 Prophet expects a dataframe with two columns:
 
-- ds <- dates
-- y <-  numeric values to forecast
+- ds = dates
+- y = numeric values to forecast
 
 ## Loading and Preparing The Data
+
 ```python
 df = pd.read_csv("your_data.csv")
 
@@ -51,7 +53,7 @@ It must also be in the format YYYY-MM-DD or YYYY-MM-DD-HH-MM-SS
 The Prophet model is as follows:
 
 \[
-y(t) = g(t) + s(t) + h(t) + $\varepsilon$_t
+y(t) = g(t) + s(t) + h(t) + \varepsilon_t
 \]
 
 Where:
@@ -62,6 +64,7 @@ Where:
 - \( \varepsilon_t \) is the error term  
 
 Creating and fitting the model only takes two lines:
+
 ```python
 m = Prophet()
 m.fit(df)
@@ -76,6 +79,7 @@ Prophet automatically models:
 You can customize these later.
 
 ## Creating a Future Dataframe
+
 ```python
 future = m.make_future_dataframe(periods=30)  # forecast 30 days ahead
 future.tail()
@@ -84,6 +88,7 @@ future.tail()
 This creates a dataframe with all historical dates plus 30 new ones.
 
 ## Generating Forecast
+
 ```python
 forecast = m.predict(future)
 forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail()
@@ -107,12 +112,15 @@ Table of expected output from the Prophet forecast model:
 Prophet includes built‑in plotting functions.
 
 ### Forecast plot
+
 ```python
 fig1 = m.plot(forecast)
 plt.title("Prophet Forecast")
 plt.show()
 ```
+
 ### Trend and seasonality components
+
 ```python
 fig2 = m.plot_components(forecast)
 plt.show()
@@ -129,24 +137,28 @@ Here is an example of a forecast plot:
 
 ![Forecast plot showing Prophet predictions](prophet_forecast_python.png)
 
+This plot shows the model’s predictions (`yhat`) along with uncertainty intervals (`yhat_lower`, `yhat_upper`). The blue line represents the forecast, while the shaded region shows the model’s confidence.
+
 
 ## Validity of Model
 As with every regression model, assumptions should still be evaluated and met using the **LINE** assumptions (Linear, Independent, Normal, Equal Variance)
 
 There are numerous ways to evaluate these diagnostics, so they will not be covered in this tutorial, but all assumptions should be reasonably met in order to validate forecasting predictions. 
 
-Cross-validation should also be considered to evalutate this models predictive power and accuracy.
+Cross-validation should also be considered to evaluate this models predictive power and accuracy.
 
 ## Feature Engineering: Adding Seasonality or Holidays (Optional Enhancements)
-Prophet makes it easy to feature engineer. You can add any amounts of different time varaibles to analyze the data for different time periods. These include holidays, seasons, trends, lags, etc. 
+Prophet makes it easy to feature engineer. You can add any amounts of different time variables to analyze the data for different time periods. These include holidays, seasons, trends, lags, etc. 
 
 To add holiday's:
+
 ```python
 m = Prophet()
 m.add_country_holidays(country_name='US')
 m.fit(df)
 ```
 For seasonality:
+
 ```python
 m = Prophet()
 m.add_seasonality(name='monthly', period=30.5, fourier_order=5)
@@ -155,7 +167,7 @@ m.fit(df)
 These additions can help improve accuracy of model especially when there are known patterns in your data
 
 ### Conclusion
-  The Prophet package is a very versitile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accesbile. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process. 
+  The Prophet package is a very versatile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accessible. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process. 
   
   To put this workflow into practice, try one of the following next steps:
 
