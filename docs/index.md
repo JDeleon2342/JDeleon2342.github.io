@@ -19,6 +19,13 @@ My goal is to continue developing strong technical skills while contributing to 
 
 ---
 
+## Blogs / Tutorials
+
+- [Tutorial](tutorial.html)
+
+
+---
+
 ## Experience
 
 ### **Current Reasearch Assistant Working On NLP Hymn Classification Pipeline — BYU Stats Department**
