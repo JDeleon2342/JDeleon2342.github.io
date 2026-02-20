@@ -1,8 +1,6 @@
 ---
-title: "Forecasting with Prophet"
+title: Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python
 ---
-
-# Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python
 
 ## Introdcution
   Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, times series is essential to many different businesses and modeling techniques. Although the prominence, forecasting can be intimidating if you are new to modeling.
