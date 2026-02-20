@@ -2,79 +2,86 @@
   {
     "objectID": "tutorial.html",
     "href": "tutorial.html",
-    "title": "Forecasting with Prophet",
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
     "section": "",
-    "text": "Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, times series is essential to many different businesses and modeling techniques. Although the prominence, forecasting can be intimidating if you are new to modeling. Prophet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, trends, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory.\nIn this tutorial, you’ll learn how to: - Prepare your data for Prophet - Fit your first forecasting model - Visualize predictions and components - Validate the model using residual diagnostics - Extend the model with seasonality and holidays\n\n\n\nIn the command line: pip install prophet\nLoad the packages needed:\nfrom prophet import Prophet\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom statsmodels.graphics.tsaplots import plot_acf\nimport scipy.stats as stats\nProphet expects a dataframe with two columns: ds &lt;- dates y &lt;- numeric values to forecast\n\n\n\ndf = pd.read_csv(\"your_data.csv\")\n\n# Prophet requires:\n# ds = date column\n# y  = numeric target\ndf['ds'] = pd.to_datetime(df['ds'])\ndf = df[['ds', 'y']]\ndf.head()\nProphet needs the dates to be a date object. It must also be in the format YYYY-MM-DD or YYYY-MM-DD-HH-MM-SS\n\n\n\nThe Prophet model is as follows:\n[ y(t) = g(t) + s(t) + h(t) + _t ]\nWhere:\n\n( g(t) ) is the trend\n\n( s(t) ) is seasonality\n\n( h(t) ) is the holiday effect\n\n( _t ) is the error term\n\nCreating and fitting the model only takes two lines:\nm = Prophet()\nm.fit(df)\nProphet automatically models: - nonlinear trend - weekly seasonality - yearly seasonality You can customize these later.\n\n\n\nfuture = m.make_future_dataframe(periods=30)  # forecast 30 days ahead\nfuture.tail()\nThis creates a dataframe with all historical dates plus 30 new ones.\n\n\n\nforecast = m.predict(future)\nforecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail()\n\n\nTable of expected output from the Prophet forecast model: | Column | Meaning | |—————|———————————————-| | ds | Date of the forecast | | yhat | Predicted value | | yhat_lower | Lower bound of uncertainty interval | | yhat_upper | Upper bound of uncertainty interval | | trend | Estimated long‑term trend component | | weekly | Weekly seasonal effect | | yearly | Yearly seasonal effect |\n\n\n\n\nProphet includes built‑in plotting functions.\n\n\nfig1 = m.plot(forecast)\nplt.title(\"Prophet Forecast\")\nplt.show()\n\n\n\nfig2 = m.plot_components(forecast)\nplt.show()\nThis breaks the model into: - overall trend - weekly seasonality - yearly seasonality These components help you understand why the model predicts what it does.\n\n\n\n\nAs with every regression model, assumptions should still be evaluated and met using the LINE assumptions (Linear, Independent, Normal, Equal Variance)\nThere are numerous ways to evaluate these diagnostics, so they will not be covered in this tutorial, but all assumptions should be reasonably met in order to validate forecasting predictions.\nCross-validation should also be considered to evalutate this models predictive power and accuracy.\n\n\n\nProphet makes it easy to feature engineer. You can add any amounts of different time varaibles to analyze the data for different time periods. These include holidays, seasons, trends, lags, etc.\nTo add holiday’s:\nm = Prophet()\nm.add_country_holidays(country_name='US')\nm.fit(df)\nFor seasonality:\nm = Prophet()\nm.add_seasonality(name='monthly', period=30.5, fourier_order=5)\nm.fit(df)\nThese additions can help improve accuracy of model especially when there are known patterns in your data\n\n\nThe Prophet package is a very versitile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accesbile. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process. To put this workflow into practice, try one of the following next steps: - Apply the Prophet workflow to your own time‑stamped dataset, even if it’s something simple like daily counts or personal tracking data. - Experiment with adding holidays or custom seasonalities to see how domain knowledge changes the shape and accuracy of your forecast. - Compare Prophet’s predictions to a simple baseline model, such as a moving average or naive “last value” forecast, to build intuition about when Prophet adds value. - Explore another forecasting library such as statsmodels or scikit‑learn, and compare its predictions to Prophet to build intuition about when each tool performs best."
+    "text": "Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, time series is essential to many different businesses and modeling techniques. Despite its prominence, forecasting can be intimidating if you are new to modeling.\nProphet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory.\nIn this tutorial, you’ll learn how to:\n\nPrepare your data for Prophet\nFit your first forecasting model\nVisualize predictions and components\nValidate the model using residual diagnostics\nExtend the model with seasonality and holidays"
   },
   {
-    "objectID": "tutorial.html#introdcution",
-    "href": "tutorial.html#introdcution",
-    "title": "Forecasting with Prophet",
+    "objectID": "tutorial.html#introduction",
+    "href": "tutorial.html#introduction",
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
     "section": "",
-    "text": "Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, times series is essential to many different businesses and modeling techniques. Although the prominence, forecasting can be intimidating if you are new to modeling. Prophet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, trends, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory.\nIn this tutorial, you’ll learn how to: - Prepare your data for Prophet - Fit your first forecasting model - Visualize predictions and components - Validate the model using residual diagnostics - Extend the model with seasonality and holidays"
+    "text": "Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, time series is essential to many different businesses and modeling techniques. Despite its prominence, forecasting can be intimidating if you are new to modeling.\nProphet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory.\nIn this tutorial, you’ll learn how to:\n\nPrepare your data for Prophet\nFit your first forecasting model\nVisualize predictions and components\nValidate the model using residual diagnostics\nExtend the model with seasonality and holidays"
   },
   {
     "objectID": "tutorial.html#installing-and-importing-prophet",
     "href": "tutorial.html#installing-and-importing-prophet",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "In the command line: pip install prophet\nLoad the packages needed:\nfrom prophet import Prophet\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom statsmodels.graphics.tsaplots import plot_acf\nimport scipy.stats as stats\nProphet expects a dataframe with two columns: ds &lt;- dates y &lt;- numeric values to forecast"
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Installing and Importing Prophet",
+    "text": "Installing and Importing Prophet\nIn the command line: pip install prophet\nLoad the packages needed:\nfrom prophet import Prophet\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom statsmodels.graphics.tsaplots import plot_acf\nimport scipy.stats as stats\nProphet expects a dataframe with two columns:\n\nds = dates\ny = numeric values to forecast"
   },
   {
     "objectID": "tutorial.html#loading-and-preparing-the-data",
     "href": "tutorial.html#loading-and-preparing-the-data",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "df = pd.read_csv(\"your_data.csv\")\n\n# Prophet requires:\n# ds = date column\n# y  = numeric target\ndf['ds'] = pd.to_datetime(df['ds'])\ndf = df[['ds', 'y']]\ndf.head()\nProphet needs the dates to be a date object. It must also be in the format YYYY-MM-DD or YYYY-MM-DD-HH-MM-SS"
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Loading and Preparing The Data",
+    "text": "Loading and Preparing The Data\ndf = pd.read_csv(\"your_data.csv\")\n\n# Prophet requires:\n# ds = date column\n# y  = numeric target\ndf['ds'] = pd.to_datetime(df['ds'])\ndf = df[['ds', 'y']]\ndf.head()\nProphet needs the dates to be a date object. It must also be in the format YYYY-MM-DD or YYYY-MM-DD-HH-MM-SS"
   },
   {
     "objectID": "tutorial.html#fitting-the-prophet-model",
     "href": "tutorial.html#fitting-the-prophet-model",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "The Prophet model is as follows:\n[ y(t) = g(t) + s(t) + h(t) + _t ]\nWhere:\n\n( g(t) ) is the trend\n\n( s(t) ) is seasonality\n\n( h(t) ) is the holiday effect\n\n( _t ) is the error term\n\nCreating and fitting the model only takes two lines:\nm = Prophet()\nm.fit(df)\nProphet automatically models: - nonlinear trend - weekly seasonality - yearly seasonality You can customize these later."
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Fitting the Prophet Model",
+    "text": "Fitting the Prophet Model\nThe Prophet model is as follows:\n[ y(t) = g(t) + s(t) + h(t) + _t ]\nWhere:\n\n( g(t) ) is the trend\n\n( s(t) ) is seasonality\n\n( h(t) ) is the holiday effect\n\n( _t ) is the error term\n\nCreating and fitting the model only takes two lines:\nm = Prophet()\nm.fit(df)\nProphet automatically models:\n\nnonlinear trend\nweekly seasonality\nyearly seasonality\n\nYou can customize these later."
   },
   {
     "objectID": "tutorial.html#creating-a-future-dataframe",
     "href": "tutorial.html#creating-a-future-dataframe",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "future = m.make_future_dataframe(periods=30)  # forecast 30 days ahead\nfuture.tail()\nThis creates a dataframe with all historical dates plus 30 new ones."
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Creating a Future Dataframe",
+    "text": "Creating a Future Dataframe\nfuture = m.make_future_dataframe(periods=30)  # forecast 30 days ahead\nfuture.tail()\nThis creates a dataframe with all historical dates plus 30 new ones."
   },
   {
     "objectID": "tutorial.html#generating-forecast",
     "href": "tutorial.html#generating-forecast",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "forecast = m.predict(future)\nforecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail()\n\n\nTable of expected output from the Prophet forecast model: | Column | Meaning | |—————|———————————————-| | ds | Date of the forecast | | yhat | Predicted value | | yhat_lower | Lower bound of uncertainty interval | | yhat_upper | Upper bound of uncertainty interval | | trend | Estimated long‑term trend component | | weekly | Weekly seasonal effect | | yearly | Yearly seasonal effect |"
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Generating Forecast",
+    "text": "Generating Forecast\nforecast = m.predict(future)\nforecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail()\n\nProphet Output\nTable of expected output from the Prophet forecast model:\n\n\n\nColumn\nMeaning\n\n\n\n\nds\nDate of the forecast\n\n\nyhat\nPredicted value\n\n\nyhat_lower\nLower bound of uncertainty interval\n\n\nyhat_upper\nUpper bound of uncertainty interval\n\n\ntrend\nEstimated long‑term trend component\n\n\nweekly\nWeekly seasonal effect\n\n\nyearly\nYearly seasonal effect"
   },
   {
     "objectID": "tutorial.html#visualizing-the-forecast",
     "href": "tutorial.html#visualizing-the-forecast",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "Prophet includes built‑in plotting functions.\n\n\nfig1 = m.plot(forecast)\nplt.title(\"Prophet Forecast\")\nplt.show()\n\n\n\nfig2 = m.plot_components(forecast)\nplt.show()\nThis breaks the model into: - overall trend - weekly seasonality - yearly seasonality These components help you understand why the model predicts what it does."
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "7. Visualizing the Forecast",
+    "text": "7. Visualizing the Forecast\nProphet includes built‑in plotting functions.\n\nForecast plot\nfig1 = m.plot(forecast)\nplt.title(\"Prophet Forecast\")\nplt.show()\n\n\nTrend and seasonality components\nfig2 = m.plot_components(forecast)\nplt.show()\nThis breaks the model into:\n\noverall trend\nweekly seasonality\nyearly seasonality\n\nThese components help you understand why the model predicts what it does.\nHere is an example of a forecast plot:\n\n\n\nForecast plot showing Prophet predictions\n\n\nThis plot shows the model’s predictions (yhat) along with uncertainty intervals (yhat_lower, yhat_upper). The blue line represents the forecast, while the shaded region shows the model’s confidence."
   },
   {
     "objectID": "tutorial.html#validity-of-model",
     "href": "tutorial.html#validity-of-model",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "As with every regression model, assumptions should still be evaluated and met using the LINE assumptions (Linear, Independent, Normal, Equal Variance)\nThere are numerous ways to evaluate these diagnostics, so they will not be covered in this tutorial, but all assumptions should be reasonably met in order to validate forecasting predictions.\nCross-validation should also be considered to evalutate this models predictive power and accuracy."
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Validity of Model",
+    "text": "Validity of Model\nAs with every regression model, assumptions should still be evaluated and met using the LINE assumptions (Linear, Independent, Normal, Equal Variance)\nThere are numerous ways to evaluate these diagnostics, so they will not be covered in this tutorial, but all assumptions should be reasonably met in order to validate forecasting predictions.\nCross-validation should also be considered to evaluate this models predictive power and accuracy."
   },
   {
     "objectID": "tutorial.html#feature-engineering-adding-seasonality-or-holidays-optional-enhancements",
     "href": "tutorial.html#feature-engineering-adding-seasonality-or-holidays-optional-enhancements",
-    "title": "Forecasting with Prophet",
-    "section": "",
-    "text": "Prophet makes it easy to feature engineer. You can add any amounts of different time varaibles to analyze the data for different time periods. These include holidays, seasons, trends, lags, etc.\nTo add holiday’s:\nm = Prophet()\nm.add_country_holidays(country_name='US')\nm.fit(df)\nFor seasonality:\nm = Prophet()\nm.add_seasonality(name='monthly', period=30.5, fourier_order=5)\nm.fit(df)\nThese additions can help improve accuracy of model especially when there are known patterns in your data\n\n\nThe Prophet package is a very versitile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accesbile. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process. To put this workflow into practice, try one of the following next steps: - Apply the Prophet workflow to your own time‑stamped dataset, even if it’s something simple like daily counts or personal tracking data. - Experiment with adding holidays or custom seasonalities to see how domain knowledge changes the shape and accuracy of your forecast. - Compare Prophet’s predictions to a simple baseline model, such as a moving average or naive “last value” forecast, to build intuition about when Prophet adds value. - Explore another forecasting library such as statsmodels or scikit‑learn, and compare its predictions to Prophet to build intuition about when each tool performs best."
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Feature Engineering: Adding Seasonality or Holidays (Optional Enhancements)",
+    "text": "Feature Engineering: Adding Seasonality or Holidays (Optional Enhancements)\nProphet makes it easy to feature engineer. You can add any amounts of different time variables to analyze the data for different time periods. These include holidays, seasons, trends, lags, etc.\nTo add holiday’s:\nm = Prophet()\nm.add_country_holidays(country_name='US')\nm.fit(df)\nFor seasonality:\nm = Prophet()\nm.add_seasonality(name='monthly', period=30.5, fourier_order=5)\nm.fit(df)\nThese additions can help improve accuracy of model especially when there are known patterns in your data\n\nConclusion\nThe Prophet package is a very versatile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accessible. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process.\nTo put this workflow into practice, try one of the following next steps:\n\nApply the Prophet workflow to your own time‑stamped dataset, even if it’s something simple like daily counts or personal tracking data.\nExperiment with adding holidays or custom seasonalities to see how domain knowledge changes the shape and accuracy of your forecast.\nCompare Prophet’s predictions to a simple baseline model, such as a moving average or naive “last value” forecast, to build intuition about when Prophet adds value.\nExplore another forecasting library such as statsmodels or scikit‑learn, and compare its predictions to Prophet to build intuition about when each tool performs best."
+  },
+  {
+    "objectID": "tutorial.html#additional-resources",
+    "href": "tutorial.html#additional-resources",
+    "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
+    "section": "Additional Resources",
+    "text": "Additional Resources\nYou can learn more from the official Prophet documentation."
   },
   {
     "objectID": "aboutme.html",
     "href": "aboutme.html",
     "title": "About Me",
     "section": "",
-    "text": "Hi, I’m Jose’ De Leon, a Senior majoring in Statistics at BYU. I’m passionate about sports analytics, weather pattern analysis, chess, video games, text mining and I enjoy working on projects that combine analytical thinking, clear communication, and practical problem‑solving. My goal is to continue developing strong technical skills while contributing to meaningful, well‑designed work.\n\n\n\n\n\n\n\nDegree: BS in Statistics Emphasis: Data Science\n\nExpected Graduation: Dec 2026\nRelevant Interests or Coursework:\n\nStatistical Modeling, Linear & Logistic Regression, Probability & Inference, Linear Algebra, Multivariate Calculus, Object-Oriented Programming, R, Python, SQL, Tableau, Analysis of Correlated Data, Bayesian Statistics, Data Wrangling and Cleaning\nStatistics Department Scholarship Recipient\n\n\n\n\n\n\n\n\n\n\nDeveloping Sentiment Mining pipeline to discover prominent Atonement Theories in hymnals and other chruch text.\nR coding, tidytext using n-gram tokenization, log based ratios for word rarity, and mulitlayered pipelines\n\nStill currently working on project\n\n\n\n\n\nBuilt linear regression models to study the effect of defensive metrics on team winning percentage\nCollected, cleaned, and analyzed baseball data, implementing regression diagnostics in R\nProvided actionable statistical insights into defensive performance and team outcomes\n\n\n\n\n\nCollected and merged multiple baseball datasets for integrated analysis\nVisualized relationships between WHIP, ERA, and home run rates using ggplot2 and dplyr\nDrew statistical inferences on league performance and exit-velocity trends\n\n\n\n\n\nDesigned and conducted an experiment with 24 participants to evaluate temperature perception by time of day and gender\nPerformed t-tests and power analysis in R to evaluate statistical significance\nSummarized findings through clear data visualizations and written interpretations\n\n\n\n\n\n\n\n\n\nPython\n\nR\n\nSQL\n\nGit & GitHub\n\nMarkdown\nTableau\n\n\n\n\n\nJupyter\n\nRStudio\n\nData visualization tools (ggplot2, Tableau)\nVS Code\nData Cleaning and Processing Workflows\n\n\n\n\n\nClear technical communication\nPublic speaking and presentations\nCollaboration in research and team settings\nAnalytical problem-solving\n\n\n\n\n\n\nOutside of academics and work, I enjoy:\n\nPlaying chess casually and other puzzle games\n\nVideo games as a way to unwind and connect with friends\n\nCleveland sports, especially baseball, and watching and analyzing movies\n\nFun fact: I enjoy food and love to try a multitude of different restuarants and cultural food.\n\n\n\n\nHere’s a photo that represents me:\n\n\n\nA photo of me"
+    "text": "Hi, I’m Jose’ De Leon, a Senior majoring in Statistics at BYU. I’m passionate about sports analytics, weather pattern analysis, chess, video games, text mining and I enjoy working on projects that combine analytical thinking, clear communication, and practical problem‑solving. My goal is to continue developing strong technical skills while contributing to meaningful, well‑designed work."
   },
   {
     "objectID": "aboutme.html#introduction",
@@ -87,42 +94,42 @@
     "objectID": "aboutme.html#education",
     "href": "aboutme.html#education",
     "title": "About Me",
-    "section": "",
-    "text": "Degree: BS in Statistics Emphasis: Data Science\n\nExpected Graduation: Dec 2026\nRelevant Interests or Coursework:\n\nStatistical Modeling, Linear & Logistic Regression, Probability & Inference, Linear Algebra, Multivariate Calculus, Object-Oriented Programming, R, Python, SQL, Tableau, Analysis of Correlated Data, Bayesian Statistics, Data Wrangling and Cleaning\nStatistics Department Scholarship Recipient"
+    "section": "Education",
+    "text": "Education\n\nBrigham Young University\n\nDegree: BS in Statistics Emphasis: Data Science\n\nExpected Graduation: Dec 2026\nRelevant Interests or Coursework:\n\nStatistical Modeling, Linear & Logistic Regression, Probability & Inference, Linear Algebra, Multivariate Calculus, Object-Oriented Programming, R, Python, SQL, Tableau, Analysis of Correlated Data, Bayesian Statistics, Data Wrangling and Cleaning\nStatistics Department Scholarship Recipient"
   },
   {
     "objectID": "aboutme.html#experience",
     "href": "aboutme.html#experience",
     "title": "About Me",
-    "section": "",
-    "text": "Developing Sentiment Mining pipeline to discover prominent Atonement Theories in hymnals and other chruch text.\nR coding, tidytext using n-gram tokenization, log based ratios for word rarity, and mulitlayered pipelines\n\nStill currently working on project\n\n\n\n\n\nBuilt linear regression models to study the effect of defensive metrics on team winning percentage\nCollected, cleaned, and analyzed baseball data, implementing regression diagnostics in R\nProvided actionable statistical insights into defensive performance and team outcomes\n\n\n\n\n\nCollected and merged multiple baseball datasets for integrated analysis\nVisualized relationships between WHIP, ERA, and home run rates using ggplot2 and dplyr\nDrew statistical inferences on league performance and exit-velocity trends\n\n\n\n\n\nDesigned and conducted an experiment with 24 participants to evaluate temperature perception by time of day and gender\nPerformed t-tests and power analysis in R to evaluate statistical significance\nSummarized findings through clear data visualizations and written interpretations"
+    "section": "Experience",
+    "text": "Experience\n\nCurrent Reasearch Assistant Working On NLP Hymn Classification Pipeline — BYU Stats Department\n\nDeveloping Sentiment Mining pipeline to discover prominent Atonement Theories in hymnals and other chruch text.\nR coding, tidytext using n-gram tokenization, log based ratios for word rarity, and mulitlayered pipelines\n\nStill currently working on project\n\n\n\nLinear Regression Analysis on Defensive Metrics — STAT 330, BYU\n\nBuilt linear regression models to study the effect of defensive metrics on team winning percentage\nCollected, cleaned, and analyzed baseball data, implementing regression diagnostics in R\nProvided actionable statistical insights into defensive performance and team outcomes\n\n\n\nBaseball Statistics Analysis — STAT 250, BYU\n\nCollected and merged multiple baseball datasets for integrated analysis\nVisualized relationships between WHIP, ERA, and home run rates using ggplot2 and dplyr\nDrew statistical inferences on league performance and exit-velocity trends\n\n\n\nTemperature Sensitivity Study — STAT 230, BYU\n\nDesigned and conducted an experiment with 24 participants to evaluate temperature perception by time of day and gender\nPerformed t-tests and power analysis in R to evaluate statistical significance\nSummarized findings through clear data visualizations and written interpretations"
   },
   {
     "objectID": "aboutme.html#skills",
     "href": "aboutme.html#skills",
     "title": "About Me",
-    "section": "",
-    "text": "Python\n\nR\n\nSQL\n\nGit & GitHub\n\nMarkdown\nTableau\n\n\n\n\n\nJupyter\n\nRStudio\n\nData visualization tools (ggplot2, Tableau)\nVS Code\nData Cleaning and Processing Workflows\n\n\n\n\n\nClear technical communication\nPublic speaking and presentations\nCollaboration in research and team settings\nAnalytical problem-solving"
+    "section": "Skills",
+    "text": "Skills\n\nProgramming & Technical\n\nPython\n\nR\n\nSQL\n\nGit & GitHub\n\nMarkdown\nTableau\n\n\n\nTools & Technologies\n\nJupyter\n\nRStudio\n\nData visualization tools (ggplot2, Tableau)\nVS Code\nData Cleaning and Processing Workflows\n\n\n\nSoft Skills\n\nClear technical communication\nPublic speaking and presentations\nCollaboration in research and team settings\nAnalytical problem-solving"
   },
   {
     "objectID": "aboutme.html#get-to-know-me",
     "href": "aboutme.html#get-to-know-me",
     "title": "About Me",
-    "section": "",
-    "text": "Outside of academics and work, I enjoy:\n\nPlaying chess casually and other puzzle games\n\nVideo games as a way to unwind and connect with friends\n\nCleveland sports, especially baseball, and watching and analyzing movies\n\nFun fact: I enjoy food and love to try a multitude of different restuarants and cultural food."
+    "section": "Get to Know Me",
+    "text": "Get to Know Me\nOutside of academics and work, I enjoy:\n\nPlaying chess casually and other puzzle games\n\nVideo games as a way to unwind and connect with friends\n\nCleveland sports, especially baseball, and watching and analyzing movies\n\nFun fact: I enjoy food and love to try a multitude of different restuarants and cultural food."
   },
   {
     "objectID": "aboutme.html#image",
     "href": "aboutme.html#image",
     "title": "About Me",
-    "section": "",
-    "text": "Here’s a photo that represents me:\n\n\n\nA photo of me"
+    "section": "Image",
+    "text": "Image\nHere’s a photo that represents me:\n\n\n\nA photo of me"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Welcome",
+    "title": "Welcome to My Portfolio",
     "section": "",
-    "text": "Welcome to My Portfolio\nThis site contains my About Me page, technical tutorials, and project work for Stat 386."
+    "text": "This site contains my About Me page, technical tutorials, and project work for Stat 386."
   }
 ]

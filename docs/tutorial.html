@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Forecasting with Prophet – Jose De Leon</title>
+<title>Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python – Jose De Leon</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Forecasting with Prophet</h1>
+<h1 class="title">Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python</h1>
 </div>
 
 
@@ -170,12 +170,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="forecasting-made-simple-a-guide-to-time-series-modeling-using-the-prophet-package-in-python" class="level1">
-<h1>Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python</h1>
-<section id="introdcution" class="level2">
-<h2 class="anchored" data-anchor-id="introdcution">Introdcution</h2>
-<p>Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, times series is essential to many different businesses and modeling techniques. Although the prominence, forecasting can be intimidating if you are new to modeling. Prophet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, trends, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory.</p>
-<p>In this tutorial, you’ll learn how to: - Prepare your data for Prophet - Fit your first forecasting model - Visualize predictions and components - Validate the model using residual diagnostics - Extend the model with seasonality and holidays</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Time series forecasting is used everywhere in modern analytics. From sales and web traffic to weather and energy usage, time series is essential to many different businesses and modeling techniques. Despite its prominence, forecasting can be intimidating if you are new to modeling.</p>
+<p>Prophet, a package created by a team of Facebook Data Scientists, is a python library that is designed to be used by anyone with basic understanding of python. It handles trends, seasonality, and missing values with very easy utility. This makes it a reliable and easier method for those who want to forecast without intense statistical theory.</p>
+<p>In this tutorial, you’ll learn how to:</p>
+<ul>
+<li>Prepare your data for Prophet</li>
+<li>Fit your first forecasting model</li>
+<li>Visualize predictions and components</li>
+<li>Validate the model using residual diagnostics</li>
+<li>Extend the model with seasonality and holidays</li>
+</ul>
 </section>
 <section id="installing-and-importing-prophet" class="level2">
 <h2 class="anchored" data-anchor-id="installing-and-importing-prophet">Installing and Importing Prophet</h2>
@@ -186,7 +192,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.graphics.tsaplots <span class="im">import</span> plot_acf</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Prophet expects a dataframe with two columns: ds &lt;- dates y &lt;- numeric values to forecast</p>
+<p>Prophet expects a dataframe with two columns:</p>
+<ul>
+<li>ds = dates</li>
+<li>y = numeric values to forecast</li>
+</ul>
 </section>
 <section id="loading-and-preparing-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="loading-and-preparing-the-data">Loading and Preparing The Data</h2>
@@ -217,7 +227,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Creating and fitting the model only takes two lines:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Prophet()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m.fit(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Prophet automatically models: - nonlinear trend - weekly seasonality - yearly seasonality You can customize these later.</p>
+<p>Prophet automatically models:</p>
+<ul>
+<li>nonlinear trend</li>
+<li>weekly seasonality</li>
+<li>yearly seasonality</li>
+</ul>
+<p>You can customize these later.</p>
 </section>
 <section id="creating-a-future-dataframe" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-future-dataframe">Creating a Future Dataframe</h2>
@@ -231,7 +247,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>forecast[[<span class="st">'ds'</span>, <span class="st">'yhat'</span>, <span class="st">'yhat_lower'</span>, <span class="st">'yhat_upper'</span>]].tail()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="prophet-output" class="level3">
 <h3 class="anchored" data-anchor-id="prophet-output">Prophet Output</h3>
-<p>Table of expected output from the Prophet forecast model: | Column | Meaning | |—————|———————————————-| | <code>ds</code> | Date of the forecast | | <code>yhat</code> | Predicted value | | <code>yhat_lower</code> | Lower bound of uncertainty interval | | <code>yhat_upper</code> | Upper bound of uncertainty interval | | <code>trend</code> | Estimated long‑term trend component | | <code>weekly</code> | Weekly seasonal effect | | <code>yearly</code> | Yearly seasonal effect |</p>
+<p>Table of expected output from the Prophet forecast model:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ds</code></td>
+<td>Date of the forecast</td>
+</tr>
+<tr class="even">
+<td><code>yhat</code></td>
+<td>Predicted value</td>
+</tr>
+<tr class="odd">
+<td><code>yhat_lower</code></td>
+<td>Lower bound of uncertainty interval</td>
+</tr>
+<tr class="even">
+<td><code>yhat_upper</code></td>
+<td>Upper bound of uncertainty interval</td>
+</tr>
+<tr class="odd">
+<td><code>trend</code></td>
+<td>Estimated long‑term trend component</td>
+</tr>
+<tr class="even">
+<td><code>weekly</code></td>
+<td>Weekly seasonal effect</td>
+</tr>
+<tr class="odd">
+<td><code>yearly</code></td>
+<td>Yearly seasonal effect</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="visualizing-the-forecast" class="level2">
@@ -247,18 +301,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="trend-and-seasonality-components">Trend and seasonality components</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig2 <span class="op">=</span> m.plot_components(forecast)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This breaks the model into: - overall trend - weekly seasonality - yearly seasonality These components help you understand why the model predicts what it does.</p>
+<p>This breaks the model into:</p>
+<ul>
+<li>overall trend</li>
+<li>weekly seasonality</li>
+<li>yearly seasonality</li>
+</ul>
+<p>These components help you understand why the model predicts what it does.</p>
+<p>Here is an example of a forecast plot:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="prophet_forecast_python.png" class="img-fluid figure-img"></p>
+<figcaption>Forecast plot showing Prophet predictions</figcaption>
+</figure>
+</div>
+<p>This plot shows the model’s predictions (<code>yhat</code>) along with uncertainty intervals (<code>yhat_lower</code>, <code>yhat_upper</code>). The blue line represents the forecast, while the shaded region shows the model’s confidence.</p>
 </section>
 </section>
 <section id="validity-of-model" class="level2">
 <h2 class="anchored" data-anchor-id="validity-of-model">Validity of Model</h2>
 <p>As with every regression model, assumptions should still be evaluated and met using the <strong>LINE</strong> assumptions (Linear, Independent, Normal, Equal Variance)</p>
 <p>There are numerous ways to evaluate these diagnostics, so they will not be covered in this tutorial, but all assumptions should be reasonably met in order to validate forecasting predictions.</p>
-<p>Cross-validation should also be considered to evalutate this models predictive power and accuracy.</p>
+<p>Cross-validation should also be considered to evaluate this models predictive power and accuracy.</p>
 </section>
 <section id="feature-engineering-adding-seasonality-or-holidays-optional-enhancements" class="level2">
 <h2 class="anchored" data-anchor-id="feature-engineering-adding-seasonality-or-holidays-optional-enhancements">Feature Engineering: Adding Seasonality or Holidays (Optional Enhancements)</h2>
-<p>Prophet makes it easy to feature engineer. You can add any amounts of different time varaibles to analyze the data for different time periods. These include holidays, seasons, trends, lags, etc.</p>
+<p>Prophet makes it easy to feature engineer. You can add any amounts of different time variables to analyze the data for different time periods. These include holidays, seasons, trends, lags, etc.</p>
 <p>To add holiday’s:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Prophet()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m.add_country_holidays(country_name<span class="op">=</span><span class="st">'US'</span>)</span>
@@ -270,11 +338,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These additions can help improve accuracy of model especially when there are known patterns in your data</p>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
-<p>The Prophet package is a very versitile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accesbile. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process. To put this workflow into practice, try one of the following next steps: - Apply the Prophet workflow to your own time‑stamped dataset, even if it’s something simple like daily counts or personal tracking data. - Experiment with adding holidays or custom seasonalities to see how domain knowledge changes the shape and accuracy of your forecast. - Compare Prophet’s predictions to a simple baseline model, such as a moving average or naive “last value” forecast, to build intuition about when Prophet adds value. - Explore another forecasting library such as <strong>statsmodels</strong> or <strong>scikit‑learn</strong>, and compare its predictions to Prophet to build intuition about when each tool performs best.</p>
-
-
+<p>The Prophet package is a very versatile and easy to understand forecasting tool. This package allows to do a lot of complex statistical theory and analysis in only a few lines of code. It can help to look at time series data and find patterns and discern trends to allow for statistical analysis that is easily accessible. Walking through all of the setup, importing, and analysis we can see the meaningful impact this package has for time series analysis. More importantly, you now have a workflow you can adapt to your own datasets—whether you’re analyzing sales, website traffic, or any other time‑indexed process.</p>
+<p>To put this workflow into practice, try one of the following next steps:</p>
+<ul>
+<li>Apply the Prophet workflow to your own time‑stamped dataset, even if it’s something simple like daily counts or personal tracking data.</li>
+<li>Experiment with adding holidays or custom seasonalities to see how domain knowledge changes the shape and accuracy of your forecast.</li>
+<li>Compare Prophet’s predictions to a simple baseline model, such as a moving average or naive “last value” forecast, to build intuition about when Prophet adds value.</li>
+<li>Explore another forecasting library such as <strong>statsmodels</strong> or <strong>scikit‑learn</strong>, and compare its predictions to Prophet to build intuition about when each tool performs best.</li>
+</ul>
 </section>
 </section>
+<section id="additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
+<p>You can learn more from the <a href="https://facebook.github.io/prophet/">official Prophet documentation</a>.</p>
+
+
 </section>
 
 </main> <!-- /main -->
