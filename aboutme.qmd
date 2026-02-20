@@ -2,8 +2,6 @@
 title: "About Me"
 ---
 
-# About Me
-
 ## Introduction
 Hi, I’m Jose' De Leon, a Senior majoring in Statistics at BYU. 
 I’m passionate about sports analytics, weather pattern analysis, chess, video games, text mining and I enjoy working on projects that combine analytical thinking, clear communication, and practical problem‑solving. 
