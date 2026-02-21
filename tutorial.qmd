@@ -52,16 +52,16 @@ It must also be in the format YYYY-MM-DD or YYYY-MM-DD-HH-MM-SS
 ## Fitting the Prophet Model
 The Prophet model is as follows:
 
-\[
+$$
 y(t) = g(t) + s(t) + h(t) + \varepsilon_t
-\]
+$$
 
 Where:
 
-- \( g(t) \) is the trend  
-- \( s(t) \) is seasonality  
-- \( h(t) \) is the holiday effect  
-- \( \varepsilon_t \) is the error term  
+- `g(t)` is the trend  
+- `s(t)` is seasonality  
+- `h(t)` is the holiday effect  
+- `\varepsilon_t` is the error term  
 
 Creating and fitting the model only takes two lines:
 
