@@ -104,6 +104,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -213,16 +242,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fitting-the-prophet-model" class="level2">
 <h2 class="anchored" data-anchor-id="fitting-the-prophet-model">Fitting the Prophet Model</h2>
 <p>The Prophet model is as follows:</p>
-<p>[ y(t) = g(t) + s(t) + h(t) + _t ]</p>
+<p><span class="math display">\[
+y(t) = g(t) + s(t) + h(t) + \varepsilon_t
+\]</span></p>
 <p>Where:</p>
 <ul>
-<li>( g(t) ) is the trend<br>
+<li><code>g(t)</code> is the trend<br>
 </li>
-<li>( s(t) ) is seasonality<br>
+<li><code>s(t)</code> is seasonality<br>
 </li>
-<li>( h(t) ) is the holiday effect<br>
+<li><code>h(t)</code> is the holiday effect<br>
 </li>
-<li>( _t ) is the error term</li>
+<li><code>\varepsilon_t</code> is the error term</li>
 </ul>
 <p>Creating and fitting the model only takes two lines:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Prophet()</span>

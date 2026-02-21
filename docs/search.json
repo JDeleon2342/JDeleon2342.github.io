@@ -32,7 +32,7 @@
     "href": "tutorial.html#fitting-the-prophet-model",
     "title": "Forecasting Made Simple: A Guide to Time Series Modeling Using the Prophet Package in Python",
     "section": "Fitting the Prophet Model",
-    "text": "Fitting the Prophet Model\nThe Prophet model is as follows:\n[ y(t) = g(t) + s(t) + h(t) + _t ]\nWhere:\n\n( g(t) ) is the trend\n\n( s(t) ) is seasonality\n\n( h(t) ) is the holiday effect\n\n( _t ) is the error term\n\nCreating and fitting the model only takes two lines:\nm = Prophet()\nm.fit(df)\nProphet automatically models:\n\nnonlinear trend\nweekly seasonality\nyearly seasonality\n\nYou can customize these later."
+    "text": "Fitting the Prophet Model\nThe Prophet model is as follows:\n\\[\ny(t) = g(t) + s(t) + h(t) + \\varepsilon_t\n\\]\nWhere:\n\ng(t) is the trend\n\ns(t) is seasonality\n\nh(t) is the holiday effect\n\n\\varepsilon_t is the error term\n\nCreating and fitting the model only takes two lines:\nm = Prophet()\nm.fit(df)\nProphet automatically models:\n\nnonlinear trend\nweekly seasonality\nyearly seasonality\n\nYou can customize these later."
   },
   {
     "objectID": "tutorial.html#creating-a-future-dataframe",
