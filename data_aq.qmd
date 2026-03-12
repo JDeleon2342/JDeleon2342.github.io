@@ -112,7 +112,7 @@ The boxplot shows that Steam game prices are heavily right‑skewed. Many games 
 
 ### Review Percent Distribution (Histogram)
 
-![](steam__reviews.png)
+![](steam_reviews.png)
 
 Most top‑selling games have fairly high review percentages, but there is still meaningful variation. This suggests that while many popular games are well‑reviewed, not all of them are universally loved. The histogram also shows why review_percent is a useful feature for exploring player sentiment.
 
