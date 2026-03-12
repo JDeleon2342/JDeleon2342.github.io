@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About Me – Jose De Leon</title>
+<title>data_aq – Jose De Leon</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -94,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./aboutme.html" aria-current="page"> 
+    <a class="nav-link" href="./aboutme.html"> 
 <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item">
@@ -102,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Prophet Tutorial</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./data_aq.html"> 
+    <a class="nav-link active" href="./data_aq.html" aria-current="page"> 
 <span class="menu-text">Data Acquisition Blog</span></a>
   </li>  
 </ul>
@@ -118,150 +118,175 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">About Me</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Hi, I’m Jose’ De Leon, a Senior majoring in Statistics at BYU. I’m passionate about sports analytics, weather pattern analysis, chess, video games, text mining and I enjoy working on projects that combine analytical thinking, clear communication, and practical problem‑solving. My goal is to continue developing strong technical skills while contributing to meaningful, well‑designed work.</p>
+<section id="scraping-steams-topselling-games-my-first-curated-dataset" class="level1">
+<h1>Scraping Steam’s Top‑Selling Games: My First Curated Dataset</h1>
+<p>For this Stat 386 project, I wanted to build a dataset that wasn’t already cleaned or packaged for me. I also wanted something fun and something I actually cared about. Since I play games on Steam, I thought it would be interesting to scrape data from the Steam Store and see what I could learn about the games that show up on the “Top Sellers” list.</p>
+<p>This project ended up teaching me a lot about how websites load data, how messy real‑world text can be, and how to turn scraped information into a clean dataset that I could actually analyze.</p>
+<hr>
+<section id="why-i-chose-this-project" class="level2">
+<h2 class="anchored" data-anchor-id="why-i-chose-this-project">Why I Chose This Project</h2>
+<p>Steam is a huge platform, and the games that appear in the Top Sellers list change constantly. These games also have a lot of useful information attached to them—prices, release dates, review scores, and review counts. All of this is public, and it updates in real time.</p>
+<p>I liked the idea of collecting this data myself and seeing whether things like price or review sentiment seemed related to how popular a game is. I love video games and enjoy playing many different types. I felt that analyzing the prices and release dates could be very indicative of a games popularity.</p>
 <hr>
 </section>
-<section id="education" class="level2">
-<h2 class="anchored" data-anchor-id="education">Education</h2>
-<section id="brigham-young-university" class="level3">
-<h3 class="anchored" data-anchor-id="brigham-young-university">Brigham Young University</h3>
+<section id="my-main-question" class="level2">
+<h2 class="anchored" data-anchor-id="my-main-question">My Main Question</h2>
+<p>The question I focused on was:</p>
+<p><strong>How do price and review sentiment relate to a game’s popularity on Steam?</strong></p>
+<p>I used <strong>review_count</strong> as a rough measure of popularity, since more reviews usually means more players. I used <strong>review_percent</strong> to represent how positively players feel about the game. And of course, <strong>price</strong> is important because Steam has everything from free‑to‑play games to $70 AAA titles.</p>
+<hr>
+</section>
+<section id="making-sure-the-scraping-was-ethical" class="level2">
+<h2 class="anchored" data-anchor-id="making-sure-the-scraping-was-ethical">Making Sure the Scraping Was Ethical</h2>
+<p>Before scraping anything, I checked that:</p>
 <ul>
-<li><strong>Degree:</strong> BS in Statistics Emphasis: Data Science<br>
+<li>Steam’s store pages are public and don’t require logging in.</li>
+<li>I wasn’t collecting anything private or personal—only game titles, prices, and review summaries.</li>
+<li>I wasn’t sending too many requests or trying to get around any restrictions.</li>
+<li>I wasn’t violating any terms of service.</li>
+</ul>
+<p>Everything I scraped is visible to any user who visits the Steam Store.</p>
+<hr>
+</section>
+<section id="how-i-got-the-data-highlevel-summary" class="level2">
+<h2 class="anchored" data-anchor-id="how-i-got-the-data-highlevel-summary">How I Got the Data (High‑Level Summary)</h2>
+<p>Steam uses infinite scrolling on the Top Sellers page. When you scroll down, the website quietly loads more results from a JSON endpoint. Instead of trying to simulate scrolling, I requested that endpoint directly.</p>
+<p>Here’s the basic process I followed:</p>
+<ol type="1">
+<li>Request multiple “chunks” of results (0–100, 100–200, 200–300, etc.).</li>
+<li>For each chunk, extract:
+<ul>
+<li>game title<br>
 </li>
-<li><strong>Expected Graduation:</strong> Dec 2026</li>
-<li><strong>Relevant Interests or Coursework:</strong></li>
-<li><ul>
-<li>Statistical Modeling, Linear &amp; Logistic Regression, Probability &amp; Inference, Linear Algebra, Multivariate Calculus, Object-Oriented Programming, R, Python, SQL, Tableau, Analysis of Correlated Data, Bayesian Statistics, Data Wrangling and Cleaning</li>
-<li>Statistics Department Scholarship Recipient</li>
+<li>release date<br>
+</li>
+<li>price (Steam has different formats depending on discounts)<br>
+</li>
+<li>review percent<br>
+</li>
+<li>review count<br>
+</li>
 </ul></li>
+<li>Save everything into a raw CSV file.</li>
+<li>Clean the data in a separate script.</li>
+</ol>
+<hr>
+</section>
+<section id="cleaning-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-the-data">Cleaning the Data</h2>
+<p>The raw data needed a lot of cleaning. Some examples:</p>
+<ul>
+<li>Prices sometimes show up as <code>$29.99</code>, sometimes as <code>$39.99 $19.99</code> (if discounted), and sometimes as “Free.”</li>
+<li>Review summaries come in strings like “97% positive — 18,537 user reviews.”</li>
+<li>Release dates include full text like “Released on Feb 14, 2024.”</li>
 </ul>
+<p>In my cleaning script, I:</p>
+<ul>
+<li>Converted “Free” and “Free To Play” to <code>0.00</code>.</li>
+<li>Extracted the last numeric price from any price string.</li>
+<li>Pulled out the numeric review percent.</li>
+<li>Pulled out the numeric review count.</li>
+<li>Extracted just the release year.</li>
+<li>Removed duplicates.</li>
+</ul>
+<p>The final cleaned dataset is saved as <code>steam_cleaned.csv</code>.</p>
+<hr>
+</section>
+<section id="overview-of-the-final-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-the-final-dataset">Overview of the Final Dataset</h2>
+<p>The dataset ended up with <strong>300 games</strong> and <strong>5 features</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>title</code></td>
+<td>Name of the game</td>
+</tr>
+<tr class="even">
+<td><code>release_year</code></td>
+<td>Year the game was released</td>
+</tr>
+<tr class="odd">
+<td><code>price</code></td>
+<td>Price in USD (0 for free games)</td>
+</tr>
+<tr class="even">
+<td><code>review_percent</code></td>
+<td>Percent of positive reviews</td>
+</tr>
+<tr class="odd">
+<td><code>review_count</code></td>
+<td>Number of user reviews</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="visual-summary-of-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="visual-summary-of-the-data">Visual Summary of the Data</h2>
+<p>These visuals come from my Jupyter notebook and helped me understand the structure of the dataset and identify important patterns.</p>
+<section id="summary-statistics-for-numeric-columns" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics-for-numeric-columns">Summary Statistics for Numeric Columns</h3>
+<p><img src="steam_stats.png" class="img-fluid"></p>
+<p>These summary statistics give a quick overview of the numeric features. Review counts have a very large range, which already shows how uneven game popularity is on Steam. Prices also vary widely, from free games to full‑price titles.</p>
+<hr>
+</section>
+<section id="price-distribution-boxplot" class="level3">
+<h3 class="anchored" data-anchor-id="price-distribution-boxplot">Price Distribution (Boxplot)</h3>
+<p><img src="steam_price output.png" class="img-fluid"></p>
+<p>The boxplot shows that Steam game prices are heavily right‑skewed. Many games are free or low‑priced, and there are several higher‑priced outliers. This makes sense because the Top Sellers list includes everything from indie games to major AAA releases.</p>
+<hr>
+</section>
+<section id="review-percent-distribution-histogram" class="level3">
+<h3 class="anchored" data-anchor-id="review-percent-distribution-histogram">Review Percent Distribution (Histogram)</h3>
+<p><img src="steam__reviews.png" class="img-fluid"></p>
+<p>Most top‑selling games have fairly high review percentages, but there is still meaningful variation. This suggests that while many popular games are well‑reviewed, not all of them are universally loved. The histogram also shows why review_percent is a useful feature for exploring player sentiment.</p>
 <hr>
 </section>
 </section>
-<section id="experience" class="level2">
-<h2 class="anchored" data-anchor-id="experience">Experience</h2>
-<section id="current-reasearch-assistant-working-on-nlp-hymn-classification-pipeline-byu-stats-department" class="level3">
-<h3 class="anchored" data-anchor-id="current-reasearch-assistant-working-on-nlp-hymn-classification-pipeline-byu-stats-department"><strong>Current Reasearch Assistant Working On NLP Hymn Classification Pipeline — BYU Stats Department</strong></h3>
+<section id="data-quality-notes" class="level2">
+<h2 class="anchored" data-anchor-id="data-quality-notes">Data Quality Notes</h2>
+<p>A few things stood out while exploring the dataset:</p>
 <ul>
-<li>Developing Sentiment Mining pipeline to discover prominent Atonement Theories in hymnals and other chruch text.</li>
-<li>R coding, tidytext using n-gram tokenization, log based ratios for word rarity, and mulitlayered pipelines<br>
-</li>
-<li>Still currently working on project</li>
-</ul>
-</section>
-<section id="linear-regression-analysis-on-defensive-metrics-stat-330-byu" class="level3">
-<h3 class="anchored" data-anchor-id="linear-regression-analysis-on-defensive-metrics-stat-330-byu"><strong>Linear Regression Analysis on Defensive Metrics — STAT 330, BYU</strong></h3>
-<ul>
-<li>Built linear regression models to study the effect of defensive metrics on team winning percentage</li>
-<li>Collected, cleaned, and analyzed baseball data, implementing regression diagnostics in R</li>
-<li>Provided actionable statistical insights into defensive performance and team outcomes</li>
-</ul>
-</section>
-<section id="baseball-statistics-analysis-stat-250-byu" class="level3">
-<h3 class="anchored" data-anchor-id="baseball-statistics-analysis-stat-250-byu"><strong>Baseball Statistics Analysis — STAT 250, BYU</strong></h3>
-<ul>
-<li>Collected and merged multiple baseball datasets for integrated analysis</li>
-<li>Visualized relationships between WHIP, ERA, and home run rates using ggplot2 and dplyr</li>
-<li>Drew statistical inferences on league performance and exit-velocity trends</li>
-</ul>
-</section>
-<section id="temperature-sensitivity-study-stat-230-byu" class="level3">
-<h3 class="anchored" data-anchor-id="temperature-sensitivity-study-stat-230-byu"><strong>Temperature Sensitivity Study — STAT 230, BYU</strong></h3>
-<ul>
-<li>Designed and conducted an experiment with 24 participants to evaluate temperature perception by time of day and gender</li>
-<li>Performed t-tests and power analysis in R to evaluate statistical significance</li>
-<li>Summarized findings through clear data visualizations and written interpretations</li>
+<li>Some games have missing prices because they haven’t been released yet.</li>
+<li>Review counts vary a lot, which makes sense because popularity is uneven.</li>
+<li>The dataset only includes top sellers, so it doesn’t represent all Steam games.</li>
+<li>Prices reflect the U.S. storefront and may differ in other regions.</li>
 </ul>
 <hr>
 </section>
-</section>
-<section id="skills" class="level2">
-<h2 class="anchored" data-anchor-id="skills">Skills</h2>
-<section id="programming-technical" class="level3">
-<h3 class="anchored" data-anchor-id="programming-technical"><strong>Programming &amp; Technical</strong></h3>
+<section id="code-and-resources" class="level2">
+<h2 class="anchored" data-anchor-id="code-and-resources">Code and Resources</h2>
+<p>All of my code and the final dataset are available in my GitHub repository:</p>
+<p><strong><a href="https://github.com/JDeleon2342/steam-data-project">GitHub Repository Link</a></strong></p>
+<p>The repo includes:</p>
 <ul>
-<li>Python<br>
+<li><code>steam_scraper.py</code><br>
 </li>
-<li>R<br>
+<li><code>steam_clean.py</code></li>
+<li><code>steam_exploration.ipynb</code></li>
+<li><code>steam_cleaned.csv</code><br>
 </li>
-<li>SQL<br>
-</li>
-<li>Git &amp; GitHub<br>
-</li>
-<li>Markdown</li>
-<li>Tableau</li>
-</ul>
-</section>
-<section id="tools-technologies" class="level3">
-<h3 class="anchored" data-anchor-id="tools-technologies"><strong>Tools &amp; Technologies</strong></h3>
-<ul>
-<li>Jupyter<br>
-</li>
-<li>RStudio<br>
-</li>
-<li>Data visualization tools (ggplot2, Tableau)</li>
-<li>VS Code</li>
-<li>Data Cleaning and Processing Workflows</li>
-</ul>
-</section>
-<section id="soft-skills" class="level3">
-<h3 class="anchored" data-anchor-id="soft-skills"><strong>Soft Skills</strong></h3>
-<ul>
-<li>Clear technical communication</li>
-<li>Public speaking and presentations</li>
-<li>Collaboration in research and team settings</li>
-<li>Analytical problem-solving</li>
+<li>A README explaining how everything works</li>
 </ul>
 <hr>
 </section>
-</section>
-<section id="get-to-know-me" class="level2">
-<h2 class="anchored" data-anchor-id="get-to-know-me">Get to Know Me</h2>
-<p>Outside of academics and work, I enjoy:</p>
-<ul>
-<li>Playing chess casually and other puzzle games<br>
-</li>
-<li>Video games as a way to unwind and connect with friends<br>
-</li>
-<li>Cleveland sports, especially baseball, and watching and analyzing movies</li>
-</ul>
-<p>Fun fact: <strong>I enjoy food and love to try a multitude of different restuarants and cultural food.</strong></p>
-<hr>
-</section>
-<section id="image" class="level2">
-<h2 class="anchored" data-anchor-id="image">Image</h2>
-<p>Here’s a photo that represents me:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Solo_Shot.jpg" class="img-fluid figure-img"></p>
-<figcaption>A photo of me</figcaption>
-</figure>
-</div>
+<section id="final-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="final-thoughts">Final Thoughts</h2>
+<p>This project helped me understand how to scrape data, clean messy text, and build a dataset from scratch. It also gave me a chance to explore a question I actually care about. Even though the dataset is simple, it’s big enough and clean enough to support interesting observations about how price and reviews relate to popularity on Steam.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -77,6 +77,83 @@
     "text": "Additional Resources\nYou can learn more from the official Prophet documentation."
   },
   {
+    "objectID": "data_aq.html",
+    "href": "data_aq.html",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "For this Stat 386 project, I wanted to build a dataset that wasn’t already cleaned or packaged for me. I also wanted something fun and something I actually cared about. Since I play games on Steam, I thought it would be interesting to scrape data from the Steam Store and see what I could learn about the games that show up on the “Top Sellers” list.\nThis project ended up teaching me a lot about how websites load data, how messy real‑world text can be, and how to turn scraped information into a clean dataset that I could actually analyze.\n\n\n\nSteam is a huge platform, and the games that appear in the Top Sellers list change constantly. These games also have a lot of useful information attached to them—prices, release dates, review scores, and review counts. All of this is public, and it updates in real time.\nI liked the idea of collecting this data myself and seeing whether things like price or review sentiment seemed related to how popular a game is. I love video games and enjoy playing many different types. I felt that analyzing the prices and release dates could be very indicative of a games popularity.\n\n\n\n\nThe question I focused on was:\nHow do price and review sentiment relate to a game’s popularity on Steam?\nI used review_count as a rough measure of popularity, since more reviews usually means more players. I used review_percent to represent how positively players feel about the game. And of course, price is important because Steam has everything from free‑to‑play games to $70 AAA titles.\n\n\n\n\nBefore scraping anything, I checked that:\n\nSteam’s store pages are public and don’t require logging in.\nI wasn’t collecting anything private or personal—only game titles, prices, and review summaries.\nI wasn’t sending too many requests or trying to get around any restrictions.\nI wasn’t violating any terms of service.\n\nEverything I scraped is visible to any user who visits the Steam Store.\n\n\n\n\nSteam uses infinite scrolling on the Top Sellers page. When you scroll down, the website quietly loads more results from a JSON endpoint. Instead of trying to simulate scrolling, I requested that endpoint directly.\nHere’s the basic process I followed:\n\nRequest multiple “chunks” of results (0–100, 100–200, 200–300, etc.).\nFor each chunk, extract:\n\ngame title\n\nrelease date\n\nprice (Steam has different formats depending on discounts)\n\nreview percent\n\nreview count\n\n\nSave everything into a raw CSV file.\nClean the data in a separate script.\n\n\n\n\n\nThe raw data needed a lot of cleaning. Some examples:\n\nPrices sometimes show up as $29.99, sometimes as $39.99 $19.99 (if discounted), and sometimes as “Free.”\nReview summaries come in strings like “97% positive — 18,537 user reviews.”\nRelease dates include full text like “Released on Feb 14, 2024.”\n\nIn my cleaning script, I:\n\nConverted “Free” and “Free To Play” to 0.00.\nExtracted the last numeric price from any price string.\nPulled out the numeric review percent.\nPulled out the numeric review count.\nExtracted just the release year.\nRemoved duplicates.\n\nThe final cleaned dataset is saved as steam_cleaned.csv.\n\n\n\n\nThe dataset ended up with 300 games and 5 features:\n\n\n\nFeature\nDescription\n\n\n\n\ntitle\nName of the game\n\n\nrelease_year\nYear the game was released\n\n\nprice\nPrice in USD (0 for free games)\n\n\nreview_percent\nPercent of positive reviews\n\n\nreview_count\nNumber of user reviews\n\n\n\n\n\n\n\nThese visuals come from my Jupyter notebook and helped me understand the structure of the dataset and identify important patterns.\n\n\n\nThese summary statistics give a quick overview of the numeric features. Review counts have a very large range, which already shows how uneven game popularity is on Steam. Prices also vary widely, from free games to full‑price titles.\n\n\n\n\n\nThe boxplot shows that Steam game prices are heavily right‑skewed. Many games are free or low‑priced, and there are several higher‑priced outliers. This makes sense because the Top Sellers list includes everything from indie games to major AAA releases.\n\n\n\n\n\nMost top‑selling games have fairly high review percentages, but there is still meaningful variation. This suggests that while many popular games are well‑reviewed, not all of them are universally loved. The histogram also shows why review_percent is a useful feature for exploring player sentiment.\n\n\n\n\n\nA few things stood out while exploring the dataset:\n\nSome games have missing prices because they haven’t been released yet.\nReview counts vary a lot, which makes sense because popularity is uneven.\nThe dataset only includes top sellers, so it doesn’t represent all Steam games.\nPrices reflect the U.S. storefront and may differ in other regions.\n\n\n\n\n\nAll of my code and the final dataset are available in my GitHub repository:\nGitHub Repository Link\nThe repo includes:\n\nsteam_scraper.py\n\nsteam_clean.py\nsteam_exploration.ipynb\nsteam_cleaned.csv\n\nA README explaining how everything works\n\n\n\n\n\nThis project helped me understand how to scrape data, clean messy text, and build a dataset from scratch. It also gave me a chance to explore a question I actually care about. Even though the dataset is simple, it’s big enough and clean enough to support interesting observations about how price and reviews relate to popularity on Steam."
+  },
+  {
+    "objectID": "data_aq.html#why-i-chose-this-project",
+    "href": "data_aq.html#why-i-chose-this-project",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "Steam is a huge platform, and the games that appear in the Top Sellers list change constantly. These games also have a lot of useful information attached to them—prices, release dates, review scores, and review counts. All of this is public, and it updates in real time.\nI liked the idea of collecting this data myself and seeing whether things like price or review sentiment seemed related to how popular a game is. I love video games and enjoy playing many different types. I felt that analyzing the prices and release dates could be very indicative of a games popularity."
+  },
+  {
+    "objectID": "data_aq.html#my-main-question",
+    "href": "data_aq.html#my-main-question",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "The question I focused on was:\nHow do price and review sentiment relate to a game’s popularity on Steam?\nI used review_count as a rough measure of popularity, since more reviews usually means more players. I used review_percent to represent how positively players feel about the game. And of course, price is important because Steam has everything from free‑to‑play games to $70 AAA titles."
+  },
+  {
+    "objectID": "data_aq.html#making-sure-the-scraping-was-ethical",
+    "href": "data_aq.html#making-sure-the-scraping-was-ethical",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "Before scraping anything, I checked that:\n\nSteam’s store pages are public and don’t require logging in.\nI wasn’t collecting anything private or personal—only game titles, prices, and review summaries.\nI wasn’t sending too many requests or trying to get around any restrictions.\nI wasn’t violating any terms of service.\n\nEverything I scraped is visible to any user who visits the Steam Store."
+  },
+  {
+    "objectID": "data_aq.html#how-i-got-the-data-highlevel-summary",
+    "href": "data_aq.html#how-i-got-the-data-highlevel-summary",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "Steam uses infinite scrolling on the Top Sellers page. When you scroll down, the website quietly loads more results from a JSON endpoint. Instead of trying to simulate scrolling, I requested that endpoint directly.\nHere’s the basic process I followed:\n\nRequest multiple “chunks” of results (0–100, 100–200, 200–300, etc.).\nFor each chunk, extract:\n\ngame title\n\nrelease date\n\nprice (Steam has different formats depending on discounts)\n\nreview percent\n\nreview count\n\n\nSave everything into a raw CSV file.\nClean the data in a separate script."
+  },
+  {
+    "objectID": "data_aq.html#cleaning-the-data",
+    "href": "data_aq.html#cleaning-the-data",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "The raw data needed a lot of cleaning. Some examples:\n\nPrices sometimes show up as $29.99, sometimes as $39.99 $19.99 (if discounted), and sometimes as “Free.”\nReview summaries come in strings like “97% positive — 18,537 user reviews.”\nRelease dates include full text like “Released on Feb 14, 2024.”\n\nIn my cleaning script, I:\n\nConverted “Free” and “Free To Play” to 0.00.\nExtracted the last numeric price from any price string.\nPulled out the numeric review percent.\nPulled out the numeric review count.\nExtracted just the release year.\nRemoved duplicates.\n\nThe final cleaned dataset is saved as steam_cleaned.csv."
+  },
+  {
+    "objectID": "data_aq.html#overview-of-the-final-dataset",
+    "href": "data_aq.html#overview-of-the-final-dataset",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "The dataset ended up with 300 games and 5 features:\n\n\n\nFeature\nDescription\n\n\n\n\ntitle\nName of the game\n\n\nrelease_year\nYear the game was released\n\n\nprice\nPrice in USD (0 for free games)\n\n\nreview_percent\nPercent of positive reviews\n\n\nreview_count\nNumber of user reviews"
+  },
+  {
+    "objectID": "data_aq.html#visual-summary-of-the-data",
+    "href": "data_aq.html#visual-summary-of-the-data",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "These visuals come from my Jupyter notebook and helped me understand the structure of the dataset and identify important patterns.\n\n\n\nThese summary statistics give a quick overview of the numeric features. Review counts have a very large range, which already shows how uneven game popularity is on Steam. Prices also vary widely, from free games to full‑price titles.\n\n\n\n\n\nThe boxplot shows that Steam game prices are heavily right‑skewed. Many games are free or low‑priced, and there are several higher‑priced outliers. This makes sense because the Top Sellers list includes everything from indie games to major AAA releases.\n\n\n\n\n\nMost top‑selling games have fairly high review percentages, but there is still meaningful variation. This suggests that while many popular games are well‑reviewed, not all of them are universally loved. The histogram also shows why review_percent is a useful feature for exploring player sentiment."
+  },
+  {
+    "objectID": "data_aq.html#data-quality-notes",
+    "href": "data_aq.html#data-quality-notes",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "A few things stood out while exploring the dataset:\n\nSome games have missing prices because they haven’t been released yet.\nReview counts vary a lot, which makes sense because popularity is uneven.\nThe dataset only includes top sellers, so it doesn’t represent all Steam games.\nPrices reflect the U.S. storefront and may differ in other regions."
+  },
+  {
+    "objectID": "data_aq.html#code-and-resources",
+    "href": "data_aq.html#code-and-resources",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "All of my code and the final dataset are available in my GitHub repository:\nGitHub Repository Link\nThe repo includes:\n\nsteam_scraper.py\n\nsteam_clean.py\nsteam_exploration.ipynb\nsteam_cleaned.csv\n\nA README explaining how everything works"
+  },
+  {
+    "objectID": "data_aq.html#final-thoughts",
+    "href": "data_aq.html#final-thoughts",
+    "title": "Scraping Steam’s Top‑Selling Games: My First Curated Dataset",
+    "section": "",
+    "text": "This project helped me understand how to scrape data, clean messy text, and build a dataset from scratch. It also gave me a chance to explore a question I actually care about. Even though the dataset is simple, it’s big enough and clean enough to support interesting observations about how price and reviews relate to popularity on Steam."
+  },
+  {
     "objectID": "aboutme.html",
     "href": "aboutme.html",
     "title": "About Me",
