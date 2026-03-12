@@ -12,3 +12,5 @@ website:
         text: About Me
       - href: tutorial.qmd
         text: Prophet Tutorial
+      - href: data_aq.qmd
+        text: ata Acquisition Blog
