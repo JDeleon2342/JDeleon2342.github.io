@@ -146,6 +146,11 @@ The repo includes:
 
 ---
 
+- **Original Source:** The dataset was created by scraping publicly available information from the Steam Store’s Top Sellers page. 
+You can view the source here: [Steam Top Sellers](https://store.steampowered.com/search/?filter=topsellers).
+
+---
+
 ## Final Thoughts
 
 This project helped me understand how to scrape data, clean messy text, and build a dataset from scratch. It also gave me a chance to explore a question I actually care about. Even though the dataset is simple, it’s big enough and clean enough to support interesting observations about how price and reviews relate to popularity on Steam.
