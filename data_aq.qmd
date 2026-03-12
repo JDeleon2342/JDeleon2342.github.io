@@ -96,7 +96,7 @@ These visuals come from my Jupyter notebook and helped me understand the structu
 
 ### Summary Statistics for Numeric Columns
 
-*Insert your describe() table here.*
+![](steam_stats.png)
 
 These summary statistics give a quick overview of the numeric features. Review counts have a very large range, which already shows how uneven game popularity is on Steam. Prices also vary widely, from free games to full‑price titles.
 
@@ -104,7 +104,7 @@ These summary statistics give a quick overview of the numeric features. Review c
 
 ### Price Distribution (Boxplot)
 
-*Insert your price boxplot here.*
+![](steam_price output.png)
 
 The boxplot shows that Steam game prices are heavily right‑skewed. Many games are free or low‑priced, and there are several higher‑priced outliers. This makes sense because the Top Sellers list includes everything from indie games to major AAA releases.
 
@@ -112,7 +112,7 @@ The boxplot shows that Steam game prices are heavily right‑skewed. Many games 
 
 ### Review Percent Distribution (Histogram)
 
-*Insert your review_percent histogram here.*
+![](steam__reviews.png)
 
 Most top‑selling games have fairly high review percentages, but there is still meaningful variation. This suggests that while many popular games are well‑reviewed, not all of them are universally loved. The histogram also shows why review_percent is a useful feature for exploring player sentiment.
 
